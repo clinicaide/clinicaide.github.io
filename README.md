@@ -2,23 +2,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinicaide - The Modern Nurse's Toolkit</title>
+    <title>Clinicaide - Your Clinical Companion in Calculations</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-gradient-start: #0f172a;
-            --bg-gradient-mid: #1e293b;
-            --bg-gradient-end: #334155;
+            --bg-gradient-start: #1a0134;
+            --bg-gradient-mid: #3b0266;
+            --bg-gradient-end: #57008a;
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
-            --text-accent: #94a3b8;
-            --glass-bg-main: rgba(30, 41, 59, 0.5);
-            --glass-bg-card: rgba(51, 65, 85, 0.6);
+            --text-accent: #b4a3c1;
+            --glass-bg-card: rgba(59, 2, 102, 0.6);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --blue-accent: #3b82f6;
+            --blue-accent: #a855f7;
+            --purple-accent: #d946ef;
         }
 
         body {
@@ -52,11 +52,11 @@
         .calculator-widget:hover {
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-            border-color: rgba(59, 130, 246, 0.5);
+            border-color: rgba(168, 85, 247, 0.5);
         }
 
         .gradient-text {
-            background-image: linear-gradient(to right, #60a5fa, #c084fc, #fb923c);
+            background-image: linear-gradient(to right, #e879f9, #a855f7, #6366f1);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -73,14 +73,14 @@
         .input-glass:focus {
             outline: none;
             border-color: var(--blue-accent);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.4);
         }
         .input-glass::placeholder {
             color: var(--text-accent);
             opacity: 0.8;
         }
         select.input-glass {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23b4a3c1' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
             background-position: right 0.5rem center;
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
@@ -103,9 +103,9 @@
             transform: scale(1.05);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
-        .btn-primary { background-image: linear-gradient(to right, #3b82f6 0%, #6366f1 100%); color: white; }
+        .btn-primary { background-image: linear-gradient(to right, var(--blue-accent), var(--purple-accent)); color: white; }
         .btn-clear { background: var(--glass-bg-card); border: 1px solid var(--glass-border); color: var(--text-secondary); }
-        .btn-clear:hover { background: rgba(51, 65, 85, 0.9); border-color: var(--text-accent); }
+        .btn-clear:hover { background: rgba(59, 2, 102, 0.9); border-color: var(--text-accent); }
         
         .fade-in { animation: fadeIn 0.3s ease-out forwards; }
         .stagger-fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
@@ -113,13 +113,31 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .results-card-bg { background-color: rgba(15, 23, 42, 0.3); border: 1px solid var(--glass-border); margin-top: 1.5rem; padding: 1.5rem; border-radius: 0.75rem; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.2); }
-        .results-strong-text-color { color: #60a5fa; }
-        .formula-bg, .breakdown-bg { background-color: rgba(15, 23, 42, 0.5); padding: 0.75rem; border-radius: 0.375rem; border: 1px solid var(--glass-border); color: var(--text-secondary); }
-        .interpretation-bg { background-color: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #93c5fd; }
         
-        .patient-icon { width: 2.5rem; height: 2.5rem; color: #60a5fa; margin-right: 0.75rem;}
+        .category-filter-scrollbar::-webkit-scrollbar { height: 4px; }
+        .category-filter-scrollbar::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.5); border-radius: 2px; }
+        .category-filter-btn {
+            flex-shrink: 0; padding: 0.5rem 1.25rem; border-radius: 9999px;
+            font-size: 0.875rem; font-weight: 600; color: var(--text-secondary);
+            background-color: var(--glass-bg-card); border: 1px solid var(--glass-border);
+            transition: all 0.2s ease-in-out; cursor: pointer; white-space: nowrap;
+            touch-action: manipulation;
+        }
+        .category-filter-btn:hover {
+            color: var(--text-primary); border-color: var(--blue-accent);
+            transform: translateY(-2px);
+        }
+        .category-filter-btn.active {
+            color: white; background-image: linear-gradient(to right, #8b5cf6, #d946ef);
+            border-color: transparent; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .results-card-bg { background-color: rgba(26, 1, 52, 0.3); border: 1px solid var(--glass-border); margin-top: 1.5rem; padding: 1.5rem; border-radius: 0.75rem; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.2); }
+        .results-strong-text-color { color: var(--purple-accent); }
+        .formula-bg, .breakdown-bg { background-color: rgba(26, 1, 52, 0.5); padding: 0.75rem; border-radius: 0.375rem; border: 1px solid var(--glass-border); color: var(--text-secondary); }
+        .interpretation-bg { background-color: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: #d8b4fe; }
+        
+        .patient-icon { width: 2.5rem; height: 2.5rem; color: var(--blue-accent); margin-right: 0.75rem;}
 
         /* --- VISUALIZATION STYLES --- */
         .donut-chart-track { stroke: rgba(255, 255, 255, 0.1); }
@@ -136,13 +154,6 @@
         .bar-chart-bar { transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
 
     </style>
-    <script type="importmap">
-    {
-      "imports": {
-        "@google/genai": "https://esm.sh/@google/genai@^1.5.1"
-      }
-    }
-    </script>
 </head>
 <body class="bg-slate-900 text-slate-200">
 
@@ -151,19 +162,22 @@
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight gradient-text">
                 Clinicaide
             </h1>
+            <p class="mt-3 sm:mt-4 text-md sm:text-lg text-text-secondary max-w-3xl mx-auto">
+                Your Clinical Companion in Calculations
+            </p>
             <div class="mt-8 w-full max-w-xl mx-auto">
                  <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5 text-text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <input type="search" id="searchInput" placeholder="Search calculators..." class="input-glass block w-full pl-12 pr-4 py-3 border rounded-full shadow-lg">
-                </div>
+                     <input type="search" id="searchInput" placeholder="Search calculators..." class="input-glass block w-full pl-4 pr-4 py-3 border rounded-full shadow-lg">
+                 </div>
             </div>
         </header>
 
         <main>
+            <div id="calculatorCategoryFilters" class="sticky top-0 z-10 py-3 bg-gradient-to-b from-bg-gradient-mid to-transparent -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mb-6 backdrop-blur-md">
+                <div class="max-w-7xl mx-auto flex items-center space-x-3 overflow-x-auto pb-3 category-filter-scrollbar">
+                </div>
+            </div>
+
             <div id="calculatorWidgetsHost" class="max-w-7xl mx-auto"></div>
             <div id="no-results" class="text-center p-10 hidden">
                 <h2 class="text-2xl font-bold text-text-secondary">No calculators found</h2>
@@ -172,9 +186,8 @@
         </main>
     </div>
 
-    <!-- Modal for Calculator -->
     <div id="calculator-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-0 sm:p-4 z-50 hidden">
-        <div id="modal-content-wrapper" class="modal-content w-full h-full sm:w-full sm:h-auto sm:max-w-3xl sm:max-h-[90vh] flex flex-col transform transition-all duration-300 sm:rounded-2xl">
+        <div id="modal-content-wrapper" class="modal-content w-full h-full sm:w-full sm:h-auto sm:max-w-3xl sm:max-h-[90vh] flex flex-col transform transition-all duration-300 sm:rounded-2xl scale-95 opacity-0">
             <div class="p-5 sm:p-6 border-b border-b-glass-border flex justify-between items-center flex-shrink-0">
                 <h2 id="modal-title" class="text-xl sm:text-2xl font-bold gradient-text">Calculator</h2>
                 <button id="modal-close-btn" class="p-2 rounded-full text-text-accent hover:bg-white/10 transition">
@@ -183,7 +196,7 @@
             </div>
             <div class="flex-grow overflow-y-auto p-5 sm:p-6">
                  <form id="calculator-form" novalidate>
-                    <div id="modal-inputs" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5"></div>
+                     <div id="modal-inputs" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5"></div>
                  </form>
                 <div id="modal-result-card" class="mt-6 hidden"></div>
             </div>
@@ -196,7 +209,7 @@
         </div>
     </div>
 
-<script>
+<script type="module">
     // Note: Some complex calculators (ASCVD, APACHE II, SOFA, NIHSS) will provide input fields
     // but direct calculation to specialized tools due to their complexity.
     const allCalculatorsData = [
@@ -492,16 +505,16 @@
                             6. Calculation: ((140 - ${values.ageYearsCG}) * ${values.weightCrClCG}) / (72 * ${values.serumCreatinineCG})${femaleMultiplier} = <strong class="results-strong-text-color">${result.crclValueCG} mL/min</strong>
                         `;
                     },
-                     interpretResult: function(result) { 
-                        const crcl = parseFloat(result.crclValueCG);
-                        let interpretation = `Estimated CrCl: ${crcl.toFixed(1)} mL/min. This value is used for medication dosage adjustments. `;
-                        if (crcl < 15) interpretation += "Represents Stage 5 CKD (Kidney Failure).";
-                        else if (crcl < 30) interpretation += "Represents Stage 4 CKD (Severe GFR Decrease).";
-                        else if (crcl < 60) interpretation += "Represents Stage 3 CKD (Moderate GFR Decrease).";
-                        else if (crcl < 90) interpretation += "Represents Stage 2 CKD (Mild GFR Decrease, if other kidney damage signs present).";
-                        else interpretation += "Represents Normal or Stage 1 CKD (if other kidney damage signs present).";
-                        return interpretation + " Note: Cockcroft-Gault estimates CrCl, which approximates GFR in stable patients.";
-                    }
+                         interpretResult: function(result) { 
+                            const crcl = parseFloat(result.crclValueCG);
+                            let interpretation = `Estimated CrCl: ${crcl.toFixed(1)} mL/min. This value is used for medication dosage adjustments. `;
+                            if (crcl < 15) interpretation += "Represents Stage 5 CKD (Kidney Failure).";
+                            else if (crcl < 30) interpretation += "Represents Stage 4 CKD (Severe GFR Decrease).";
+                            else if (crcl < 60) interpretation += "Represents Stage 3 CKD (Moderate GFR Decrease).";
+                            else if (crcl < 90) interpretation += "Represents Stage 2 CKD (Mild GFR Decrease, if other kidney damage signs present).";
+                            else interpretation += "Represents Normal or Stage 1 CKD (if other kidney damage signs present).";
+                            return interpretation + " Note: Cockcroft-Gault estimates CrCl, which approximates GFR in stable patients.";
+                        }
                 },
                 { 
                     id: "anionGapGeneralAdult",
@@ -1135,7 +1148,7 @@
                         {id: "hrSIRS", label:"Heart Rate (bpm)", type:"number", placeholder:">90"},
                         {id: "rrSIRS", label:"Respiratory Rate (breaths/min)", type:"number", placeholder:">20"},
                         {id: "paco2SIRS", label:"PaCO₂ (mmHg)", type:"number", placeholder:"<32 (alternative to RR)"},
-                        {id: "wbcSIRS", label:"WBC (cells/mm³)", type:"number", placeholder:"<4000 or >12000"},
+                        {id: "wbcSIRS", label:"WBC (x1000/mm³)", type:"number", placeholder:"<4 or >12"},
                         {id: "bandsSIRS", label:"Immature Bands (%)", type:"number", placeholder:">10% (alternative to WBC)"},
                     ], outputs:[{id:"sirsCount", label:"SIRS Criteria Met"}, {id:"sirsDiagnosis", label:"SIRS Diagnosis"}], formulaText:"Two or more of: Temp (<36/>38), HR(>90), RR(>20) or PaCO2(<32), WBC(<4k/>12k) or Bands(>10%).", 
                     calculate: function(v){ let c=0; const t=parseFloat(v.tempSIRS); if(!isNaN(t)&&(t<36||t>38))c++; if(!isNaN(parseInt(v.hrSIRS))&&parseInt(v.hrSIRS)>90)c++; if((!isNaN(parseInt(v.rrSIRS))&&parseInt(v.rrSIRS)>20)||(!isNaN(parseFloat(v.paco2SIRS))&&parseFloat(v.paco2SIRS)<32))c++; if((!isNaN(parseFloat(v.wbcSIRS))&&(parseFloat(v.wbcSIRS)<4||parseFloat(v.wbcSIRS)>12))||(!isNaN(parseFloat(v.bandsSIRS))&&parseFloat(v.bandsSIRS)>10))c++; return{sirsCount:c, sirsDiagnosis:c>=2?"SIRS Likely Present":"SIRS Not Met"}; }, 
@@ -1322,6 +1335,7 @@
     const calculatorWidgetsHost = document.getElementById('calculatorWidgetsHost');
     const searchInput = document.getElementById('searchInput');
     const noResultsDiv = document.getElementById('no-results');
+    const categoryFiltersContainer = document.getElementById('calculatorCategoryFilters')?.querySelector('.flex');
     
     // Modal DOM Elements
     const modal = document.getElementById('calculator-modal');
@@ -1340,6 +1354,47 @@
         temp.textContent = str;
         return temp.innerHTML;
     }
+    
+    function renderCategoryFilters() {
+        if (!categoryFiltersContainer) return;
+        categoryFiltersContainer.innerHTML = '';
+        allCalculatorsData.forEach((category) => {
+            const categoryId = `calc-category-${category.category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+            const button = document.createElement('button');
+            button.className = `category-filter-btn`;
+            button.textContent = category.category;
+            button.dataset.targetId = categoryId;
+            
+            button.addEventListener('click', () => {
+                document.getElementById(categoryId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            categoryFiltersContainer.appendChild(button);
+        });
+    }
+
+    function setupCategoryObserver() {
+        const sections = document.querySelectorAll('#calculatorWidgetsHost section');
+        const buttons = document.querySelectorAll('.category-filter-btn');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-120px 0px -50% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const targetId = entry.target.id;
+                    buttons.forEach(button => {
+                        button.classList.toggle('active', button.dataset.targetId === targetId);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    }
 
     function renderCalculatorWidgetsPage(filteredData = allCalculatorsData) {
         calculatorWidgetsHost.innerHTML = ''; 
@@ -1348,11 +1403,13 @@
         let cardCounter = 0;
         filteredData.forEach(category => {
             const categorySection = document.createElement('section');
-            categorySection.className = 'mb-12';
+            const categoryId = `calc-category-${category.category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+            categorySection.id = categoryId;
+            categorySection.className = 'mb-12 scroll-mt-24';
 
             const categoryTitleEl = document.createElement('h2');
             categoryTitleEl.className = 'text-2xl font-bold text-text-secondary mb-6 pb-2 border-b border-b-glass-border flex items-center gap-3';
-            categoryTitleEl.innerHTML = `<span class="text-blue-400">${category.categoryIcon || ''}</span> ${category.category}`;
+            categoryTitleEl.innerHTML = `<span class="text-purple-400">${category.categoryIcon || ''}</span> ${category.category}`;
             categorySection.appendChild(categoryTitleEl);
 
             const widgetsGrid = document.createElement('div');
@@ -1392,6 +1449,7 @@
             categorySection.appendChild(widgetsGrid);
             calculatorWidgetsHost.appendChild(categorySection);
         });
+        setupCategoryObserver();
     }
 
     function renderConverterBody(calc) {
@@ -1445,7 +1503,6 @@
         const sourceId = sourceInput.id;
         const sourceValue = parseFloat(sourceInput.value);
 
-        // Clear other inputs if source is empty or invalid
         if (sourceInput.value.trim() === '' || isNaN(sourceValue)) {
             calc.inputs.forEach(inputDef => {
                 if (inputDef.id !== sourceId) {
@@ -1459,8 +1516,8 @@
         let allValues = {};
         if (calc.widgetType === 'converter-special') {
              calc.inputs.forEach(inputDef => {
-                 const el = document.getElementById(inputDef.id);
-                 if(el) allValues[inputDef.id] = el.value;
+                  const el = document.getElementById(inputDef.id);
+                  if(el) allValues[inputDef.id] = el.value;
              });
         }
 
@@ -1471,8 +1528,7 @@
             if (targetInput) {
                 const resValue = result[targetId];
                 if (!isNaN(parseFloat(resValue))) {
-                     // Avoid tiny floating point inaccuracies
-                    targetInput.value = Number(parseFloat(resValue).toPrecision(6));
+                   targetInput.value = Number(parseFloat(resValue).toPrecision(6));
                 } else {
                     targetInput.value = '';
                 }
@@ -1551,7 +1607,7 @@
             const addButton = document.createElement('button');
             addButton.type = 'button';
             addButton.textContent = `+ Add ${inputDef.listName} Item`;
-            addButton.className = 'mt-2 text-sm py-1.5 px-3 bg-blue-600/50 hover:bg-blue-600/70 text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-blue-500 transition-all';
+            addButton.className = 'mt-2 text-sm py-1.5 px-3 bg-purple-600/50 hover:bg-purple-600/70 text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-purple-500 transition-all';
             addButton.onclick = () => addDynamicListItem(inputDef.id, listContainerId);
             existingGroup.appendChild(addButton);
 
@@ -1746,23 +1802,21 @@
 
         const chartHTML = `
             <div class="relative h-48 w-full">
-                <!-- Grid lines -->
                 <div class="absolute top-0 left-0 w-full h-full">
                     <div class="h-1/4 w-full border-b border-dashed border-white/10"></div>
                     <div class="h-1/4 w-full border-b border-dashed border-white/10"></div>
                     <div class="h-1/4 w-full border-b border-dashed border-white/10"></div>
                     <div class="h-1/4 w-full"></div>
                 </div>
-                <!-- Bars -->
                 <div class="absolute bottom-0 left-0 right-0 flex justify-around items-end h-full px-4">
                     <div class="w-1/3 text-center">
-                        <div class="font-bold text-sm text-blue-300">${intake} mL</div>
-                        <div class="bar-chart-bar w-1/2 mx-auto bg-blue-500 rounded-t-md" style="height: 0%;"></div>
+                        <div class="font-bold text-sm text-purple-300">${intake} mL</div>
+                        <div class="bar-chart-bar w-1/2 mx-auto bg-purple-500 rounded-t-md" style="height: 0%;"></div>
                         <div class="text-xs font-semibold text-text-secondary mt-1">Intake</div>
                     </div>
                      <div class="w-1/3 text-center">
-                        <div class="font-bold text-sm text-red-300">${output} mL</div>
-                        <div class="bar-chart-bar w-1/2 mx-auto bg-red-500 rounded-t-md" style="height: 0%;"></div>
+                        <div class="font-bold text-sm text-pink-300">${output} mL</div>
+                        <div class="bar-chart-bar w-1/2 mx-auto bg-pink-500 rounded-t-md" style="height: 0%;"></div>
                         <div class="text-xs font-semibold text-text-secondary mt-1">Output</div>
                     </div>
                 </div>
@@ -1820,7 +1874,7 @@
             } else {
                 const value = formData.get(inputDef.id);
                 values[inputDef.id] = value; 
-                 if (inputDef.unit) values[`${inputDef.id}_unit`] = inputDef.unit;
+                if (inputDef.unit) values[`${inputDef.id}_unit`] = inputDef.unit;
 
                 if (!value && inputDef.type !== 'select' && inputDef.type !== 'dynamicList' && inputDef.type !== 'text' && (calculator.inputs || []).find(i => i.id === inputDef.id)) { 
                     displayErrorMessage(inputDef.id, 'This field is required.');
@@ -1843,13 +1897,13 @@
                     const generallyPositiveIds = ['desiredDose', 'doseOnHand', 'volumeVehicle', 'totalVolume', 'totalTimeHours', 'totalVolumeGtt', 'totalTimeMinutes', 'dropFactor', 'weightKg', 'heightCm', 'ageYearsCG', 'weightCrClCG', 'serumCreatinineCG', 'prescribedDosePerKg', 'weightPeds', 'dosesPerDay', 'weightFluidsPeds', 'weightUrinePeds', 'shiftDuration', 'sbpMap', 'dbpMap', 'weightBurn', 'tbsa', 'mapForCpp', 'pao2'];
                      const nonNegativeIds = ['icp'];
                      if (generallyPositiveIds.includes(inputDef.id)) {
-                        displayErrorMessage(inputDef.id, 'Value must be positive.');
-                        if(!firstErrorFieldId) firstErrorFieldId = inputDef.id;
-                        hasError = true;
+                         displayErrorMessage(inputDef.id, 'Value must be positive.');
+                         if(!firstErrorFieldId) firstErrorFieldId = inputDef.id;
+                         hasError = true;
                      } else if (nonNegativeIds.includes(inputDef.id) && parseFloat(value) < 0) {
-                        displayErrorMessage(inputDef.id, 'Value must be non-negative.');
-                        if(!firstErrorFieldId) firstErrorFieldId = inputDef.id;
-                        hasError = true;
+                         displayErrorMessage(inputDef.id, 'Value must be non-negative.');
+                         if(!firstErrorFieldId) firstErrorFieldId = inputDef.id;
+                         hasError = true;
                      }
                 }
                 if (inputDef.id === 'fio2' && value && (parseFloat(value) < 21 || parseFloat(value) > 100)) {
@@ -1880,7 +1934,7 @@
             resultCard.appendChild(patientIconDiv);
 
             if(resultData.info && calculator.infoMessage) {
-                 resultCard.innerHTML += `<p class="mt-4 p-3 bg-blue-500/20 text-blue-200 border border-blue-500/30 rounded-lg text-sm">${sanitizeHTML(calculator.infoMessage)}</p>`;
+                 resultCard.innerHTML += `<p class="mt-4 p-3 bg-purple-500/20 text-purple-200 border border-purple-500/30 rounded-lg text-sm">${sanitizeHTML(calculator.infoMessage)}</p>`;
             }
 
             if (calculator.visualizationType && !resultData.info) {
@@ -1954,7 +2008,7 @@
 
             if (calculatorsForThisCategory.length > 0) {
                  if (!trulyFiltered.find(c => c.category === category.category)) {
-                    trulyFiltered.push({ ...category, calculators: calculatorsForThisCategory });
+                     trulyFiltered.push({ ...category, calculators: calculatorsForThisCategory });
                  }
             }
         });
@@ -1962,6 +2016,7 @@
     }
     
     document.addEventListener('DOMContentLoaded', () => {
+        renderCategoryFilters();
         renderCalculatorWidgetsPage();
 
         searchInput.addEventListener('input', handleSearch);
@@ -1985,6 +2040,12 @@
             e.preventDefault();
             if (currentCalculator) handleCalculate(currentCalculator);
         });
+        
+        // Set first category button to active on load
+        setTimeout(() => {
+            const firstButton = document.querySelector('.category-filter-btn');
+            if(firstButton) firstButton.classList.add('active');
+        }, 100);
     });
 </script>
 </body>
